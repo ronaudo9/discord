@@ -1,0 +1,15 @@
+.message{
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  color: white;
+  // margin-bottom: 15px;//ここでメッセージ間の余白を調整している
+  .messageInfo{
+    padding: 20px 20px 20px 10px;
+  }
+  .messageTimetamp{
+    color: #7b7c85;
+    margin-left: 20px;
+    font-size: 16px;
+  }
+}
