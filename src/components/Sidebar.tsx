@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.scss";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
-import SidebarChannel from './SidebarChanel';
+import SidebarChannel from './SidebarChannel';
 import MicIcon from '@mui/icons-material/Mic';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { auth, db } from "../firebase";
+import { useAppSelector } from "../app/hooks";
+// import { collection, query } from "firebase/firestore/lite";
+import { onSnapshot,collection, query, DocumentData } from "firebase/firestore";
+import { ConstructionOutlined } from "@mui/icons-material";
+import useCollection from "../hooks/useCollection";
+
 
 const Sidebar = () => {
+
+  const user = useAppSelector((state) => state.user);
+  const {documents:channels} = useCollection("channels");
   return (
     <div className="sidebar">
       {/*sidebarLeft*/}
@@ -35,17 +45,16 @@ const Sidebar = () => {
              <AddIcon className="sidebarAddIcon"/>
            </div>
            <div className="sidebarChannelList">
-             <SidebarChannel />
-             <SidebarChannel />
-             <SidebarChannel />
-             <SidebarChannel />
+             {channels.map((channel) => (
+               <SidebarChannel channel={channel} id={channel.id}/>
+             ))}
            </div>
            <div className="sidebarFooter">
              <div className="sidebarAccount">
-               <img src="./icon.png" alt="" />
+               <img src={user?.photo} alt="" onClick={() => auth.signOut()}/>
                <div className="accountName">
-                 <h4>ShinCode</h4>
-                 <span>#8162</span>
+                 <h4>{user?.displayName}</h4>
+                 <span>#{user?.uid.substring(0,4)}</span>
                </div>
              </div>
              <div className="sidebarVoice">
