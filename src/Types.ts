@@ -1,8 +1,13 @@
-export interface InitialUserState{
+export interface InitialUserState {
   user: null | {
-    uid: string;//ユーザーのid
+    uid: string; //ユーザーのid
     photo: string;
     email: string;
     displayName: string;
-  }
+  };
+}
+
+export interface InitialChannelState {
+  channelId: string | null;
+  channelName: string | null;
 }
