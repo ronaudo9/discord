@@ -20,9 +20,10 @@
     }
     img{
       position: absolute;
-      width: 45px;//50pxから変更
+      width: 47px;//50pxから変更
       top: 50%;
       left: 50%;
+      border-radius: 10px;
       transform: translate(-50%, -50%);
     }
   }
@@ -71,6 +72,11 @@
         img{
           width: 60px;
           border-radius: 50%;
+          &:hover {
+            opacity: 0.6;
+            transition-duration: 0.3s;
+            cursor: pointer;
+          }
         }
         .accountName{
           margin-left: 5px;
