@@ -24,7 +24,9 @@ const Chat = () => {
   const channelName = useAppSelector((state) => state.channel.channelName);
   const channelId = useAppSelector((state) => state.channel.channelId);
   const user = useAppSelector((state) => state.user.user);
+  //分割代入でsubDocuments内の値をmessagesに代入している
   const { subDocuments: messages } = useSubCollection("channels", "messages");
+
   // useEffect(() => {"
   //   let collectionRef = collection(
   //     db,
@@ -56,7 +58,7 @@ const Chat = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    //channlesコレクションの中にあるmessagesコレクションの中にメッセージ情報を入れる
+    //1.db内の2.channelsコレクションの3.channelsIdが一致したchannelsコレクションの中にある3.messagesコレクションを指定
     const collectionRef: CollectionReference<DocumentData> = collection(
       db,
       "channels",
@@ -102,7 +104,7 @@ const Chat = () => {
         <form>
           <input
             type="text"
-            placeholder="#Udemyへメッセージを送信"
+            placeholder="メッセージを送信"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setInputText(e.target.value)
             }
