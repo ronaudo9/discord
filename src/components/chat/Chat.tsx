@@ -6,7 +6,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import ChatMessage from "./ChatMessage";
 import { useAppSelector } from "../../app/hooks";
 import ChatHeader from "./ChatHeader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   collection,
   DocumentData,
@@ -14,50 +14,43 @@ import {
   addDoc,
   serverTimestamp,
   DocumentReference,
-  onSnapshot,
-  Timestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import useSubCollection from "../../hooks/useSubCollection";
 
-interface Messages {
-  timestamp: Timestamp;
-  message: string;
-  user: {
-    uid:string;
-    photo: string;
-    email: string;
-    displayName: string;
-  }
-}
 const Chat = () => {
   const [inputText, setInputText] = useState<string>("");
-  const [messages, setMessages] = useState< Messages[]>([]);
-
 
   const channelName = useAppSelector((state) => state.channel.channelName);
   const channelId = useAppSelector((state) => state.channel.channelId);
   const user = useAppSelector((state) => state.user.user);
+  const { subDocuments: messages } = useSubCollection("channels", "messages");
+  // useEffect(() => {"
+  //   let collectionRef = collection(
+  //     db,
+  //     "channels",
+  //     String(channelId),
+  //     "messages"
+  //   );
+  //   //collectionRefOrderByで投稿順に並び替え
+  //   const collectionRefOrderBy = query(
+  //     collectionRef,
+  //     //昇順はdesc、降順はasc
+  //     orderBy("timestamp", "asc")
+  //   );
 
-  useEffect(() => {
-    let collectionRef = collection(
-      db,
-      "channels",
-      String(channelId),
-      "messages"
-    );
-    onSnapshot(collectionRef, (snapshot)=> {
-      let results: Messages[] = [];
-      snapshot.docs.forEach((doc) => {
-        results.push({
-          timestamp: doc.data().timestamp,
-          message: doc.data().message,
-          user:doc.data().user,
-        })
-      })
-      setMessages(results);
-      console.log(results);
-    });
-  }, [channelId]);
+  //   onSnapshot(collectionRefOrderBy, (snapshot) => {
+  //     let results: Messages[] = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       results.push({
+  //         timestamp: doc.data().timestamp,
+  //         message: doc.data().message,
+  //         user: doc.data().user,
+  //       });
+  //     });
+  //     setMessages(results);
+  //   });
+  // }, [channelId]);
 
   const sendMessage = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -78,7 +71,9 @@ const Chat = () => {
         user: user,
       }
     );
-    console.log(docRef);
+    // console.log(docRef);
+    //送信ボタンを押すと空になる処理
+    setInputText("");
   };
 
   // console.log(inputText);
@@ -88,10 +83,18 @@ const Chat = () => {
       <ChatHeader channelName={channelName} />
       {/* chatMessage */}
       <div className="chatMassage">
+        {messages.map((message, index) => (
+          <ChatMessage
+            key={index}
+            message={message.message}
+            timestamp={message.timestamp}
+            user={message.user}
+          />
+        ))}
+
+        {/* <ChatMessage />
         <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
+        <ChatMessage /> */}
       </div>
       {/* chatInput */}
       <div className="chatInput">
@@ -103,6 +106,7 @@ const Chat = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setInputText(e.target.value)
             }
+            value={inputText}
           />
           <button
             type="submit"

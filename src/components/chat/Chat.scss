@@ -3,9 +3,12 @@
   flex-direction: column;
   flex-grow: 1;
   background-color: #33363d;
+  height: 100vh;
 
   .chatMassage{
-    flex-grow: 1;
+    height: 100vh;
+    //コメントが多くなりはみ出た部分（空白）を表示させず、スクロールする
+    overflow-y: scroll;
   }
 
   .chatInput{
