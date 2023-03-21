@@ -51,10 +51,14 @@
     }
     .sidebarHeader{
       display: flex;
+      .Icon{
+        cursor: pointer;
+      }
     }
     .sidebarAddIcon{
       cursor: pointer;
     }
+
     .sidebarFooter{
       position: absolute;
       bottom: 0;
