@@ -16,10 +16,19 @@ const ChatHeader = (props: Props) => {
   return (
     <div className="chatHeader">
       <div className="chatHeaderLeft">
+        {channelName?(
         <h3>
           <span className="chatHeaderHash">#</span>
           { channelName }
         </h3>
+        ):(
+          <h3>
+          <span className="chatHeaderHash">#</span>
+          {/* Please select a channel. */}
+          チャンネルを選択してください
+        </h3>
+        )
+        }
       </div>
       <div className="chatheaderRight">
         <NotificationsIcon />
