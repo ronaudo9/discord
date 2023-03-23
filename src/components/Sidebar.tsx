@@ -23,6 +23,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 const Sidebar = () => {
   const user = useAppSelector((state) => state.user.user);
   const { documents: channels } = useCollection("channels");
+
   const [Text, setText] = useState<boolean>(true);
 
   const HasPermission = () => {
