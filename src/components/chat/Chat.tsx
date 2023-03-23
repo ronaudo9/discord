@@ -26,7 +26,7 @@ const Chat = () => {
   const user = useAppSelector((state) => state.user.user);
   //分割代入でsubDocuments内の値をmessagesに代入している
   const { subDocuments: messages } = useSubCollection("channels", "messages");
-console.log(channelName)
+
   // useEffect(() => {"
   //   let collectionRef = collection(
   //     db,
