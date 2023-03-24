@@ -13,14 +13,11 @@ import { login, logout } from "./features/userSlice";
 
 function App() {
   const user = useAppSelector((state) => state.user.user);
-  // const user = null;
-console.log(user)
 
 const dispatch = useAppDispatch();
 
 useEffect(() => {
   auth.onAuthStateChanged((loginUser) => {
-    console.log(loginUser);
     if(loginUser){
       dispatch(login({
         uid: loginUser.uid,
