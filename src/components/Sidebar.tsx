@@ -28,7 +28,6 @@ const Sidebar = () => {
 
   const HasPermission = () => {
     setText((prev) => !prev);
-    console.log(Text);
   };
 
   const addCannel = async () => {
