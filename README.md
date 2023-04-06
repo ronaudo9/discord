@@ -8,7 +8,7 @@ SPAのSNSサイト。(react+firebase)
 https://discord-a567b.web.app/
 ```
 
-- 新規登録及びログインについて
+- 新規登録及びログインについて<br>
 ユーザーが使用しているgoogleアカウントを用いて新規登録及びログインができます。
 
 
